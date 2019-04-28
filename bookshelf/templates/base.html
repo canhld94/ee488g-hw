@@ -1,0 +1,90 @@
+{#
+# Copyright 2015 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bookshelf - Python on Google Cloud Platform</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/starability/2.4.2/starability-minified/starability-all.min.css">
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto ;
+        background-color: rgb(255, 255, 255);
+        padding: 10px;
+      }
+      .grid-item {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(219, 241, 245, 0.8);
+        padding: 5px;
+        font-size: 10px;
+        text-align: left;
+      }
+      /* Style the search box inside the navigation bar */
+      .navbar .search-container {
+        float: right;
+      }
+      .navbar input[type=text] {
+        padding: 6px;
+        margin-top: 8px;
+        font-size: 14px;
+        border: none;
+      }
+      .navbar .search-container button {
+        float: left;
+        padding: 6px;
+        margin-top: 8px;
+        margin-right: 10px;
+        /* background: #ddd; */
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+      }
+        /* Rating style */
+    </style>
+  </head>
+  <body>
+    <div class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="navbar-brand">Bookshelf</div>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/books">Books</a></li>
+        </ul>
+        <div class="search-container">
+            <form id="book_search" action="search" method="GET">
+            <!-- <button type="submit" class="btn btn-success">Search</button> -->
+              <button id="search" class="btn btn-success btn-sm">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+              </button>
+              <input type="text" placeholder="Title, Year ..." name="search_string"></input>
+              <label class="radio-inline"><input type="radio" name="filter_by" value = "title" checked>Title</input></label>
+              <label class="radio-inline"><input type="radio" name="filter_by" value = "year">Year</input></label>
+            </form>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+    {{user}}
+  </body>
+</html>
