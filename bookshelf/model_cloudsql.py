@@ -109,6 +109,7 @@ def create(data):
 def update(data, id):
     book = Book.query.get(id)
     for k, v in data.items():
+        print(k, v)
         setattr(book, k, v)
     db.session.commit()
     return from_sql(book)
@@ -136,7 +137,7 @@ def search(search_string, filter_by, limit=6, cursor=None):
                 .offset(cursor))
     books = builtin_list(map(from_sql, query.all()))
     next_page = cursor + limit if len(books) == limit else None
-    return (books, next_page)
+    return (books, None) # No paging in search now, token should return NULL
 # [END search]
 
 def _create_database():

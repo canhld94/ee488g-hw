@@ -83,30 +83,33 @@ def delete(id):
     get_model().delete(id)
     return redirect(url_for('.list'))
 
+
 @crud.route('/search', methods=['GET'])
 def search():
     token = request.args.get('page_token', None)
     if token:
         token = token.encode('utf-8')
-    filter_by = request.args['filter_by']
-    search_string = request.args['search_string']
+    filter_by = request.args.get('filter_by', None)
+    search_string = request.args.get('search_string', None)
     print(search_string)
+    if search_string:
+        books, next_page_token = get_model().search(search_string, filter_by, cursor=token)
 
-    books, next_page_token = get_model().search(search_string, filter_by, cursor=token)
-
-    return render_template(
-        "list.html",
-        books=books,
-        next_page_token=next_page_token)
+        return render_template(
+            "list.html",
+            books=books,
+            next_page_token=next_page_token)
+    else:
+        return redirect(url_for('.list'))
 
 
 @crud.route('/<id>/rate', methods=['POST'])
 def rate(id):
     book = get_model().read(id)
 
-    rating = request.form['rating']
+    rating = request.form.get('rating', None)
     print(id, rating)
-
-    book = get_model().update(dict([{'avg_rating', rating}]), id)
+    if rating:
+        book = get_model().update(dict([{'avg_rating', rating}]), id)
 
     return redirect(url_for('.view', id=book['id']))
