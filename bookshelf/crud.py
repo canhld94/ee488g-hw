@@ -97,8 +97,7 @@ def search():
     return render_template(
         "list.html",
         books=books,
-        next_page_token=next_page_token,
-        action = 'search')
+        next_page_token=next_page_token)
 
 
 @crud.route('/<id>/rate', methods=['POST'])

@@ -119,20 +119,20 @@ def delete(id):
     Book.query.filter_by(id=id).delete()
     db.session.commit()
 
-# [START search]
-def search(search_string, filter_by, limit=10, cursor=None):
+# [START search] --> No paging now, list all books
+def search(search_string, filter_by, limit=6, cursor=None):
     cursor = int(cursor) if cursor else 0
     if filter_by == "title":
         query = (Book.query
                 .filter(Book.title.like('%'+search_string+'%'))
                 .order_by(Book.title)
-                .limit(limit)
+                # .limit(limit)
                 .offset(cursor))
     else:
         query = (Book.query
                 .filter_by(publishedDate = search_string)
                 .order_by(Book.title)
-                .limit(limit)
+                # .limit(limit)
                 .offset(cursor))
     books = builtin_list(map(from_sql, query.all()))
     next_page = cursor + limit if len(books) == limit else None
